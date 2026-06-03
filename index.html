@@ -118,7 +118,7 @@ function renderResumo() {
     return '<div class="resumo-card '+t+'"><span class="resumo-turno">Turno '+tl[t]+'</span>'+(has?rows.map(function(r){return'<div class="resumo-row"><span class="rk">'+r[0]+'</span><span class="rv">'+r[1]+'</span></div>';}).join(''):'<div class="resumo-empty">Sem dados</div>')+'</div>';
   }).join('');
 }
-var SHEET_CSV='https://docs.google.com/spreadsheets/d/1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc/pub?output=csv';
+var SHEET_CSV='https://api.allorigins.win/raw?url=' + encodeURIComponent('https://docs.google.com/spreadsheets/d/1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc/pub?output=csv');
 function parseCSV(text){var lines=text.split('\n').map(function(l){return l.trim();}).filter(function(l){return l;});return lines.map(function(line){var cols=[],cur='',inQ=false;for(var i=0;i<line.length;i++){if(line[i]==='"'){inQ=!inQ;}else if(line[i]===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=line[i];}}cols.push(cur.trim());return cols;});}
 function rowVal(rows,keyword){var r=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf(keyword.toLowerCase())!==-1;});return r?(r[2]||'').trim():'';}
 function syncSheet(){
