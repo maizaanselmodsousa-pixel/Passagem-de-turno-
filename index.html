@@ -124,26 +124,47 @@ function rowVal(rows,keyword){var r=rows.find(function(r){return r[1]&&r[1].toLo
 function syncSheet(){
   var bar=document.getElementById('sync-bar'),btn=document.getElementById('btn-sync');
   bar.style.display='block';btn.textContent='⏳ Buscando...';
-  fetch(SHEET_CSV+'?t='+Date.now()).then(function(res){return res.json();}).then(function(rows){
-    var rows=parseCSV(text);
-    var dataRow=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf('data')!==-1;});
-    var turnoStr=dataRow?(dataRow[3]||''):'';
-    var turno='t2';
-    if(turnoStr.indexOf('T1')!==-1||turnoStr.indexOf('t1')!==-1)turno='t1';
-    else if(turnoStr.indexOf('T3')!==-1||turnoStr.indexOf('t3')!==-1)turno='t3';
-    var dataVal=rowVal(rows,'data');
-    if(dataVal){var parts=dataVal.split('/');if(parts.length===3)store[turno].data=parts[2]+'-'+parts[1].padStart(2,'0')+'-'+parts[0].padStart(2,'0');}
-    var hcInp=rowVal(rows,'HC INP');if(hcInp)store[turno].hc_inp_p=hcInp;
-    var hcInpRow=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf('hc inp')!==-1;});
-    if(hcInpRow&&hcInpRow[3]){var obs=hcInpRow[3],m;m=obs.match(/folgas?:\s*(\d+)/i);if(m)store[turno].hc_inp_f=m[1];m=obs.match(/f.rias?:\s*(\d+)/i);if(m)store[turno].hc_inp_fer=m[1];m=obs.match(/sinergia:\s*(\d+)/i);if(m)store[turno].hc_inp_sin=m[1];m=obs.match(/licen.a:\s*(\d+)/i);if(m)store[turno].hc_inp_lic=m[1];}
-    var hcPs=rowVal(rows,'HC PS');if(hcPs)store[turno].hc_ps_p=hcPs;
-    var hcPsRow=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf('hc ps')!==-1;});
-    if(hcPsRow&&hcPsRow[3]){var obs2=hcPsRow[3],m2;m2=obs2.match(/treinamento:\s*(\d+)/i);if(m2)store[turno].hc_ps_tr=m2[1];m2=obs2.match(/atestado:\s*(\d+)/i);if(m2)store[turno].hc_ps_at=m2[1];m2=obs2.match(/falta:\s*(\d+)/i);if(m2)store[turno].hc_ps_fal=m2[1];m2=obs2.match(/licen.a:\s*(\d+)/i);if(m2)store[turno].hc_ps_lic=m2[1];}
-    var fieldMap=[['início do turno','ci_inicio'],['fim do turno','ci_fim'],['peças processadas','ci_pecas'],['ps finalizadas','ci_ps_fin'],['menos de 6','tarefa6h'],['pendentes início','ps_pend_ini'],['identificados','ps_ident'],['pendentes','ps_pend_fim'],['put away  realizado','pa_real'],['put away  pendente','pa_pend'],['paletes','paletes'],['última ida','ultima_ida'],['reaberturas','reaberturas'],['5s','cinco_s']];
-    fieldMap.forEach(function(pair){var val=rowVal(rows,pair[0]);if(val)store[turno][pair[1]]=val;});
-    var alertRow=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf('alertas')!==-1;});
-    if(alertRow)store[turno].alertas=[alertRow[2],alertRow[3]].filter(Boolean).join(' — ');
-    var ciRow=rows.find(function(r){return r[1]&&r[1].toLowerCase().indexOf('início do turno')!==-1;});
+  var old=document.getElementById('_sp');if(old)old.remove();
+  window._sheetCB=function(rows){
+    try{
+      var dataRow=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf('data')!==-1;});
+      var turnoStr=dataRow?(String(dataRow[3])||''):'';
+      var turno='t2';
+      if(turnoStr.indexOf('T1')!==-1)turno='t1';
+      else if(turnoStr.indexOf('T3')!==-1)turno='t3';
+      function rv(kw){var r=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf(kw.toLowerCase())!==-1;});return r?String(r[2]||'').trim():'';}
+      var dataVal=rv('data');
+      if(dataVal){var pts=dataVal.split('/');if(pts.length===3)store[turno].data=pts[2]+'-'+pts[1].padStart(2,'0')+'-'+pts[0].padStart(2,'0');}
+      var hcInp=rv('HC INP');if(hcInp)store[turno].hc_inp_p=hcInp;
+      var hcPs=rv('HC PS');if(hcPs)store[turno].hc_ps_p=hcPs;
+      var hcInpRow=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf('hc inp')!==-1;});
+      if(hcInpRow&&hcInpRow[3]){var o=String(hcInpRow[3]),m;m=o.match(/folgas?:\s*(\d+)/i);if(m)store[turno].hc_inp_f=m[1];m=o.match(/f.rias?:\s*(\d+)/i);if(m)store[turno].hc_inp_fer=m[1];m=o.match(/sinergia:\s*(\d+)/i);if(m)store[turno].hc_inp_sin=m[1];m=o.match(/licen.a:\s*(\d+)/i);if(m)store[turno].hc_inp_lic=m[1];}
+      var hcPsRow=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf('hc ps')!==-1;});
+      if(hcPsRow&&hcPsRow[3]){var o2=String(hcPsRow[3]),m2;m2=o2.match(/treinamento:\s*(\d+)/i);if(m2)store[turno].hc_ps_tr=m2[1];m2=o2.match(/atestado:\s*(\d+)/i);if(m2)store[turno].hc_ps_at=m2[1];m2=o2.match(/falta:\s*(\d+)/i);if(m2)store[turno].hc_ps_fal=m2[1];m2=o2.match(/licen.a:\s*(\d+)/i);if(m2)store[turno].hc_ps_lic=m2[1];}
+      var fm=[['início do turno','ci_inicio'],['fim do turno','ci_fim'],['peças processadas','ci_pecas'],['ps finalizadas','ci_ps_fin'],['menos de 6','tarefa6h'],['pendentes início','ps_pend_ini'],['identificados','ps_ident'],['pendentes','ps_pend_fim'],['put away  realizado','pa_real'],['put away  pendente','pa_pend'],['paletes','paletes'],['última ida','ultima_ida'],['reaberturas','reaberturas'],['5s','cinco_s']];
+      fm.forEach(function(p){var v=rv(p[0]);if(v)store[turno][p[1]]=v;});
+      var ar=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf('alertas')!==-1;});
+      if(ar)store[turno].alertas=[ar[2],ar[3]].filter(Boolean).join(' — ');
+      var cr=rows.find(function(r){return r[1]&&String(r[1]).toLowerCase().indexOf('início do turno')!==-1;});
+      if(cr&&cr[3]){var bm=String(cr[3]).match(/backlog:\s*(\d+)/i);if(bm)store[turno].ci_backlog=bm[1];}
+      document.getElementById('panel-'+turno).innerHTML=buildForm(turno);
+      document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+      document.querySelector('.tab.'+turno).classList.add('active');
+      document.getElementById('panel-'+turno).classList.add('active');
+      bar.style.background='#10b981';bar.style.color='white';bar.textContent='✅ Dados sincronizados!';
+      setTimeout(function(){bar.style.display='none';bar.style.background='#ffe600';bar.style.color='#1a1a2e';},2500);
+    }catch(e){
+      bar.style.background='#ef4444';bar.style.color='white';bar.textContent='❌ Erro ao processar dados.';
+      setTimeout(function(){bar.style.display='none';bar.style.background='#ffe600';bar.style.color='#1a1a2e';},3000);
+    }
+    btn.textContent='🔄 Sincronizar';
+  };
+  var s=document.createElement('script');s.id='_sp';
+  s.src=SHEET_CSV+'?callback=_sheetCB&t='+Date.now();
+  s.onerror=function(){bar.style.background='#ef4444';bar.style.color='white';bar.textContent='❌ Erro ao buscar planilha.';setTimeout(function(){bar.style.display='none';bar.style.background='#ffe600';bar.style.color='#1a1a2e';},3000);btn.textContent='🔄 Sincronizar';};
+  document.body.appendChild(s);
+}
     if(ciRow&&ciRow[3]){var bm=ciRow[3].match(/backlog:\s*(\d+)/i);if(bm)store[turno].ci_backlog=bm[1];}
     document.getElementById('panel-'+turno).innerHTML=buildForm(turno);
     document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
