@@ -15,14 +15,11 @@ header h1{font-size:13px;font-weight:800;}
 header small{font-size:10px;color:#555;}
 .header-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
 .btn{border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;}
-.btn-dark{background:#1a1a2e;color:white;}.btn-dark:hover{background:#2d2d4e;}
-.btn-green{background:#10b981;color:white;}.btn-green:hover{background:#059669;}
 .btn-outline{background:white;color:#1a1a2e;border:1.5px solid #ddd;}.btn-outline:hover{background:#f5f5f5;}
 a.btn{text-decoration:none;display:inline-block;}
-#sync-bar{display:none;position:fixed;top:0;left:0;right:0;background:#ffe600;color:#1a1a2e;text-align:center;font-size:11px;font-weight:700;padding:4px;z-index:9999;}
-.kpi-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 12px 0;}
+.kpi-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 12px 0;}
 .kpi-card{background:white;border-radius:8px;padding:8px 12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;}
-.kpi-card.blue{border-top-color:#3b82f6;}.kpi-card.green{border-top-color:#10b981;}.kpi-card.amber{border-top-color:#f59e0b;}.kpi-card.red{border-top-color:#ef4444;}
+.kpi-card.green{border-top-color:#10b981;}.kpi-card.amber{border-top-color:#f59e0b;}.kpi-card.red{border-top-color:#ef4444;}
 .kpi-label{font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.4px;}
 .kpi-value{font-size:22px;font-weight:900;color:#1a1a2e;line-height:1;}
 .kpi-sub{font-size:9px;color:#aaa;}
@@ -46,7 +43,7 @@ a.btn{text-decoration:none;display:inline-block;}
 .hc-field{display:flex;flex-direction:column;gap:2px;min-width:48px;}
 .hc-field label{font-size:8px;color:#aaa;font-weight:700;text-transform:uppercase;}
 .hc-field input{border:1px solid #e0e0e0;border-radius:4px;padding:3px 4px;font-size:12px;font-weight:700;font-family:inherit;outline:none;background:white;width:48px;text-align:center;}
-.metrics-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-bottom:8px;}
+.metrics-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:8px;}
 .metric{background:#f8f9fa;border-radius:6px;padding:5px 7px;border-left:3px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;cursor:pointer;}
 .metric:hover{box-shadow:0 1px 6px rgba(0,0,0,0.1);}
 .metric.blue{border-left-color:#3b82f6;}.metric.green{border-left-color:#10b981;}.metric.amber{border-left-color:#f59e0b;}.metric.red{border-left-color:#ef4444;}.metric.purple{border-left-color:#8b5cf6;}.metric.gray{border-left-color:#9ca3af;}
@@ -79,206 +76,4 @@ textarea.obs-input{width:100%;resize:none;min-height:60px;border:1px solid #e0e0
 .presenca-count.ps{border-color:#10b981;color:#065f46;}.presenca-count.ps span{color:#10b981;}
 .presenca-list{display:flex;flex-direction:column;gap:3px;margin-bottom:8px;max-height:220px;overflow-y:auto;}
 .presenca-item{display:flex;align-items:center;gap:6px;background:white;border-radius:6px;padding:4px 8px;border:1px solid #efefef;}
-.presenca-item .p-nome{flex:1;font-size:11px;font-weight:600;color:#1a1a2e;}
-.presenca-item .p-team{font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;flex-shrink:0;}
-.presenca-item .p-team.inp{background:#dbeafe;color:#1e40af;}
-.presenca-item .p-team.ps{background:#d1fae5;color:#065f46;}
-.presenca-item .p-status{font-size:10px;border:1px solid #e0e0e0;border-radius:5px;padding:2px 5px;font-family:inherit;outline:none;background:white;cursor:pointer;font-weight:600;}
-.presenca-item .p-status.presente{border-color:#10b981;background:#f0fdf4;color:#065f46;}
-.presenca-item .p-status.ausente{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
-.presenca-item .p-status.atestado{border-color:#f59e0b;background:#fffbeb;color:#92400e;}
-.presenca-item .p-status.ferias{border-color:#3b82f6;background:#eff6ff;color:#1e40af;}
-.presenca-item .p-status.licenca{border-color:#8b5cf6;background:#f5f3ff;color:#5b21b6;}
-.presenca-item .p-status.folga{border-color:#9ca3af;background:#f9fafb;color:#374151;}
-.presenca-item .p-remove{background:none;border:none;cursor:pointer;color:#ccc;font-size:13px;line-height:1;padding:0 2px;transition:color 0.2s;flex-shrink:0;}
-.presenca-item .p-remove:hover{color:#ef4444;}
-.presenca-add{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
-.presenca-add input[type=text]{border:1px solid #e0e0e0;border-radius:6px;padding:4px 8px;font-size:11px;font-family:inherit;outline:none;background:white;flex:1;min-width:110px;}
-.presenca-add select{border:1px solid #e0e0e0;border-radius:6px;padding:4px 6px;font-size:11px;font-family:inherit;outline:none;background:white;}
-.presenca-add .btn-add{background:#1a1a2e;color:white;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;}
-.resumo-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
-.resumo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.resumo-card{background:#f8f9fa;border-radius:8px;padding:10px 12px;border:1px solid #efefef;}
-.resumo-turno{font-size:10px;font-weight:800;text-transform:uppercase;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;}
-.t1 .resumo-turno{background:#dbeafe;color:#1e40af;}.t2 .resumo-turno{background:#d1fae5;color:#065f46;}.t3 .resumo-turno{background:#fef3c7;color:#92400e;}
-.resumo-row{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid #ececec;}
-.resumo-row:last-child{border:none;}.rk{color:#999;}.rv{font-weight:700;}
-.resumo-empty{font-size:11px;color:#ccc;font-style:italic;text-align:center;padding:20px 0;}
-.chart-container{margin-top:12px;background:#f8f9fa;border-radius:8px;padding:12px;border:1px solid #efefef;}
-.chart-title{font-size:10px;font-weight:800;color:#555;text-transform:uppercase;margin-bottom:10px;}
-.bar-chart{display:flex;flex-direction:column;gap:6px;}
-.bar-row{display:flex;align-items:center;gap:8px;}
-.bar-label{font-size:9px;color:#888;font-weight:600;width:110px;text-align:right;flex-shrink:0;}
-.bar-wrap{flex:1;background:#e9ecef;border-radius:3px;height:18px;overflow:hidden;display:flex;gap:1px;}
-.bar-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;border-radius:2px;transition:width 0.5s;min-width:0;}
-.bar-seg.t1{background:#3b82f6;}.bar-seg.t2{background:#10b981;}.bar-seg.t3{background:#f59e0b;}
-.bar-legend{display:flex;gap:10px;margin-top:6px;justify-content:center;}
-.bar-legend-item{display:flex;align-items:center;gap:3px;font-size:9px;color:#666;}
-.bar-legend-dot{width:8px;height:8px;border-radius:50%;}
-.badge{display:inline-block;padding:1px 6px;border-radius:20px;font-size:9px;font-weight:700;}
-.badge-ok{background:#d1fae5;color:#065f46;}.badge-pend{background:#fef3c7;color:#92400e;}.badge-nok{background:#fee2e2;color:#991b1b;}
-footer{text-align:center;padding:6px;font-size:9px;color:#ccc;}
-@media print{
-  #sync-bar,.header-actions,.tabs,.save-row,.kpi-bar,.btn,.presenca-add,.presenca-toggle{display:none!important;}
-  header{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:4px 10px;}
-  .content{margin:0;box-shadow:none;border-radius:0;padding:6px;}
-  .metric,.hc-box,.bottom-box{break-inside:avoid;}
-  body{background:white;font-size:10px;}
-  .presenca-box{display:block!important;}
-  .presenca-item .p-remove{display:none!important;}
-}
-</style>
-</head>
-<body>
-<div id="sync-bar">Buscando dados da planilha...</div>
-<header>
-  <div class="header-left">
-    <span class="logo">ML</span>
-    <div><h1>Passagem de Turno — INP / PS</h1><small id="header-date"></small></div>
-  </div>
-  <div class="header-actions">
-    <button class="btn btn-dark" onclick="syncSheet()" id="btn-sync">🔄 Sincronizar</button>
-    <button class="btn btn-green" onclick="exportPDF()">🖨️ Imprimir</button>
-    <a class="btn btn-outline" href="https://docs.google.com/spreadsheets/d/1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc/edit" target="_blank">📊 Planilha</a>
-  </div>
-</header>
-<div class="kpi-bar">
-  <div class="kpi-card blue"><span class="kpi-label">Total Check-in</span><span class="kpi-value" id="kpi-ci">—</span><span class="kpi-sub">Soma T1+T2+T3</span></div>
-  <div class="kpi-card green"><span class="kpi-label">PS Finalizadas</span><span class="kpi-value" id="kpi-ps">—</span><span class="kpi-sub">Soma T1+T2+T3</span></div>
-  <div class="kpi-card amber"><span class="kpi-label">Put Away Realizado</span><span class="kpi-value" id="kpi-pa">—</span><span class="kpi-sub">Soma T1+T2+T3</span></div>
-  <div class="kpi-card red"><span class="kpi-label">PS Pendentes (Fim)</span><span class="kpi-value" id="kpi-pend">—</span><span class="kpi-sub">Soma T1+T2+T3</span></div>
-</div>
-<div class="tabs">
-  <button class="tab t1 active" onclick="showTab('t1',this)">🔵 T1</button>
-  <button class="tab t2" onclick="showTab('t2',this)">🟢 T2</button>
-  <button class="tab t3" onclick="showTab('t3',this)">🟡 T3</button>
-  <button class="tab tab-resumo" onclick="showTab('resumo',this)" style="margin-left:auto">📋 Resumo</button>
-</div>
-<div class="content">
-  <div id="panel-t1" class="panel active"></div>
-  <div id="panel-t2" class="panel"></div>
-  <div id="panel-t3" class="panel"></div>
-  <div id="panel-resumo" class="panel">
-    <div class="resumo-header"><span style="font-size:12px;font-weight:700;">Comparativo de Turnos</span><button class="btn btn-outline" onclick="exportPDF()">🖨️ Imprimir</button></div>
-    <div class="resumo-grid" id="resumo-content"></div>
-    <div class="chart-container" id="chart-container"></div>
-  </div>
-</div>
-<footer>MercadoLivre · INP/PS · <span id="footer-date"></span></footer>
-<script>
-var SHEET_ID='1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc';
-var STORAGE_KEY='passagem_turno_data';
-var store={t1:{},t2:{},t3:{}};
-try{var saved=localStorage.getItem(STORAGE_KEY);if(saved)store=JSON.parse(saved);}catch(e){}
-function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(store));}catch(e){}updateKPIs();}
-function sv(t,k,val){store[t][k]=val;persist();flash(t,'saved');}
-function flash(t,type){var el=document.getElementById('ss-'+t);if(el){el.className='save-status show '+(type||'saved');el.textContent=type==='cleared'?'🗑️ Limpo':'✅ Salvo';setTimeout(function(){el.classList.remove('show');},2000);}updateLastSave(t);}
-function updateLastSave(t){var el=document.getElementById('ls-'+t);if(el){var n=new Date();el.textContent='Save: '+n.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}}
-function g(t,k){return store[t][k]||'';}
-function hcf(t,k,lbl){return '<div class="hc-field"><label>'+lbl+'</label><input type="number" value="'+g(t,k)+'" placeholder="0" onchange="sv(\''+t+'\',\''+k+'\',this.value)"></div>';}
-function met(t,k,lbl,color){return '<div class="metric '+color+'" onclick="this.querySelector(\'input\').focus()"><label>'+lbl+'</label><input type="text" value="'+g(t,k)+'" placeholder="—" onchange="sv(\''+t+'\',\''+k+'\',this.value)"></div>';}
-var STATUS_OPTS=[{val:'presente',label:'✅ Presente'},{val:'ausente',label:'❌ Ausente'},{val:'atestado',label:'🏥 Atestado'},{val:'ferias',label:'🏖️ Férias'},{val:'licenca',label:'📋 Licença'},{val:'folga',label:'😴 Folga'}];
-function buildForm(t){
-  var cincoOpts=['','OK','Pendente','NOK'];var cincoSel=g(t,'cinco_s');
-  var opts=cincoOpts.map(function(o){return'<option value="'+o+'" '+(o===cincoSel?'selected':'')+'>'+({'':"—",OK:"✅ OK",Pendente:"⏳ Pendente",NOK:"❌ NOK"}[o]||o)+'</option>';}).join('');
-  var turnoOpts=['T1','T2','T3'].map(function(o){return'<option '+(o===t.toUpperCase()||o===g(t,'turno')?'selected':'')+'>'+o+'</option>';}).join('');
-  return '<div class="top-row">'
-    +'<div class="meta-box"><label>Data</label><input type="date" value="'+g(t,'data')+'" onchange="sv(\''+t+'\',\'data\',this.value)"><label style="margin-top:4px">Turno</label><select onchange="sv(\''+t+'\',\'turno\',this.value)">'+turnoOpts+'</select></div>'
-    +'<div class="hc-box"><h4>👥 HC INP</h4><div class="hc-inline">'+hcf(t,'hc_inp_p','Pres.')+hcf(t,'hc_inp_f','Folgas')+hcf(t,'hc_inp_fer','Férias')+hcf(t,'hc_inp_sin','Sinergia')+hcf(t,'hc_inp_lic','Licença')+'</div></div>'
-    +'<div class="hc-box"><h4>👥 HC PS Produção</h4><div class="hc-inline">'+hcf(t,'hc_ps_p','Pres.')+hcf(t,'hc_ps_tr','Trein.')+hcf(t,'hc_ps_at','Atest.')+hcf(t,'hc_ps_fal','Falta')+hcf(t,'hc_ps_lic','Licença')+'</div></div>'
-    +'</div>'
-    +'<div class="presenca-wrap"><button class="presenca-toggle" id="ptoggle-'+t+'" onclick="togglePresenca(\''+t+'\')"><span class="arrow">▶</span> 👤 Lista de Presença</button>'
-    +'<div class="presenca-box" id="pbox-'+t+'"><div class="presenca-summary"><div class="presenca-count inp">INP Presentes: <span id="pc-inp-'+t+'">0</span></div><div class="presenca-count ps">PS Presentes: <span id="pc-ps-'+t+'">0</span></div></div>'
-    +'<div class="presenca-list" id="plist-'+t+'"></div>'
-    +'<div class="presenca-add"><input type="text" id="pnome-'+t+'" placeholder="Nome do colaborador" onkeydown="if(event.key===\'Enter\')addPessoa(\''+t+'\')"><select id="pteam-'+t+'"><option value="inp">INP</option><option value="ps">PS</option></select><button class="btn-add" onclick="addPessoa(\''+t+'\')">+ Adicionar</button></div></div></div>'
-    +'<div class="section-title">📦 Métricas Operacionais</div>'
-    +'<div class="metrics-grid">'+met(t,'ci_inicio','Check-in Início','blue')+met(t,'ci_backlog','Backlog','gray')+met(t,'ci_fim','Check-in Fim','blue')+met(t,'ci_pecas','Peças Process.','green')+met(t,'ci_ps_fin','PS Finalizadas','green')+met(t,'tarefa6h','Tarefas < 6h','amber')+met(t,'ps_pend_ini','PS Pend. Início','red')+met(t,'ps_ident','PS Identificados','blue')+met(t,'ps_pend_fim','PS Pend. Fim','amber')+met(t,'pa_real','Put Away Real.','green')+met(t,'pa_pend','Put Away Pend.','amber')+met(t,'paletes','Paletes p/Linha','purple')+'</div>'
-    +'<div class="bottom-row"><div class="bottom-box"><h4>⚠️ Alertas / Tickets</h4><textarea class="alert-input" placeholder="Ex: SSHP-1234 — descrição..." onchange="sv(\''+t+'\',\'alertas\',this.value)">'+g(t,'alertas')+'</textarea></div>'
-    +'<div class="bottom-box"><h4>📋 Outros</h4><div class="bottom-field"><label>Última ida na linha</label><input type="time" value="'+g(t,'ultima_ida')+'" onchange="sv(\''+t+'\',\'ultima_ida\',this.value)"></div><div class="bottom-field"><label>Reaberturas Pend.</label><input type="number" value="'+g(t,'reaberturas')+'" placeholder="0" onchange="sv(\''+t+'\',\'reaberturas\',this.value)"></div><div class="bottom-field"><label>5S</label><select onchange="sv(\''+t+'\',\'cinco_s\',this.value)">'+opts+'</select></div></div>'
-    +'<div class="bottom-box"><h4>📝 Observações</h4><textarea class="obs-input" placeholder="Pontos de atenção para o próximo turno..." onchange="sv(\''+t+'\',\'obs\',this.value)">'+g(t,'obs')+'</textarea></div></div>'
-    +'<div class="save-row"><div style="display:flex;align-items:center;gap:8px;"><span class="save-status saved" id="ss-'+t+'"></span><span class="last-save" id="ls-'+t+'"></span></div>'
-    +'<div class="save-row-right"><button class="btn btn-outline" onclick="clearT(\''+t+'\')">🗑️ Limpar</button><button class="btn btn-green" onclick="exportPDF()">🖨️ Imprimir</button></div></div>';
-}
-function clearT(t){if(!confirm('Limpar dados do '+t.toUpperCase()+'?'))return;store[t]={};persist();document.getElementById('panel-'+t).innerHTML=buildForm(t);flash(t,'cleared');}
-function showTab(name,btn){document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});btn.classList.add('active');document.getElementById('panel-'+name).classList.add('active');if(name==='resumo')renderResumo();}
-function cincosBadge(val){if(!val||val==='—')return'<span style="color:#ccc">—</span>';var cls={OK:'badge-ok',Pendente:'badge-pend',NOK:'badge-nok'}[val]||'';var icon={OK:'✅',Pendente:'⏳',NOK:'❌'}[val]||'';return'<span class="badge '+cls+'">'+icon+' '+val+'</span>';}
-function renderResumo(){
-  var tl={t1:'T1',t2:'T2',t3:'T3'};
-  document.getElementById('resumo-content').innerHTML=['t1','t2','t3'].map(function(t){
-    var d=store[t];var has=d.data||d.hc_ps_p||d.ci_inicio;
-    var rows=[['Data',d.data?d.data.split('-').reverse().join('/'):'—'],['HC INP',d.hc_inp_p||'—'],['HC PS',d.hc_ps_p||'—'],['Check-in Início',d.ci_inicio||'—'],['Check-in Fim',d.ci_fim||'—'],['Peças Process.',d.ci_pecas||'—'],['PS Finalizadas',d.ci_ps_fin||'—'],['PS Pend. Início',d.ps_pend_ini||'—'],['PS Identificados',d.ps_ident||'—'],['PS Pend. Fim',d.ps_pend_fim||'—'],['Put Away Real.',d.pa_real||'—'],['Put Away Pend.',d.pa_pend||'—'],['Última ida',d.ultima_ida||'—'],['Reaberturas',d.reaberturas||'—']];
-    var cincoRow='<div class="resumo-row"><span class="rk">5S</span><span class="rv">'+cincosBadge(d.cinco_s||'—')+'</span></div>';
-    var alertRow=d.alertas?'<div class="resumo-row" style="flex-direction:column;gap:2px"><span class="rk">Alertas</span><span class="rv" style="font-size:9px;color:#92400e;background:#fff7ed;padding:3px 5px;border-radius:4px;margin-top:2px">'+d.alertas+'</span></div>':'';
-    return'<div class="resumo-card '+t+'"><span class="resumo-turno">Turno '+tl[t]+'</span>'+(has?rows.map(function(r){return'<div class="resumo-row"><span class="rk">'+r[0]+'</span><span class="rv">'+r[1]+'</span></div>';}).join('')+cincoRow+alertRow:'<div class="resumo-empty">Sem dados</div>')+'</div>';
-  }).join('');
-  renderChart();
-}
-function renderChart(){
-  var metrics=[{key:'ci_pecas',label:'Peças Processadas'},{key:'ci_ps_fin',label:'PS Finalizadas'},{key:'pa_real',label:'Put Away Real.'},{key:'ps_pend_fim',label:'PS Pendentes Fim'}];
-  var turnoColors={t1:'#3b82f6',t2:'#10b981',t3:'#f59e0b'};
-  var html='<div class="chart-title">📊 Comparativo por Métrica</div><div class="bar-chart">';
-  metrics.forEach(function(m){var vals={t1:parseFloat(store.t1[m.key])||0,t2:parseFloat(store.t2[m.key])||0,t3:parseFloat(store.t3[m.key])||0};var total=vals.t1+vals.t2+vals.t3||1;html+='<div class="bar-row"><span class="bar-label">'+m.label+'</span><div class="bar-wrap">';['t1','t2','t3'].forEach(function(t){var pct=Math.round(vals[t]/total*100);if(pct>0)html+='<div class="bar-seg '+t+'" style="width:'+pct+'%">'+vals[t]+'</div>';});html+='</div></div>';});
-  html+='</div><div class="bar-legend">';['t1','t2','t3'].forEach(function(t){html+='<div class="bar-legend-item"><div class="bar-legend-dot" style="background:'+turnoColors[t]+'"></div>Turno '+t.toUpperCase()+'</div>';});html+='</div>';
-  document.getElementById('chart-container').innerHTML=html;
-}
-function updateKPIs(){function sumField(key){var v=['t1','t2','t3'].reduce(function(acc,t){return acc+(parseFloat(store[t][key])||0);},0);return v>0?v:'—';}document.getElementById('kpi-ci').textContent=sumField('ci_fim');document.getElementById('kpi-ps').textContent=sumField('ci_ps_fin');document.getElementById('kpi-pa').textContent=sumField('pa_real');document.getElementById('kpi-pend').textContent=sumField('ps_pend_fim');}
-function exportPDF(){window.print();}
-function syncSheet(){
-  var bar=document.getElementById('sync-bar');var btn=document.getElementById('btn-sync');
-  bar.style.background='#ffe600';bar.style.color='#1a1a2e';bar.textContent='🔄 Buscando dados...';bar.style.display='block';btn.textContent='⏳';btn.disabled=true;
-  var old=document.getElementById('_gviz_s');if(old)old.remove();
-  window._gvizCB=function(resp){
-    try{
-      var rows=resp.table.rows;
-      function cellVal(row){return row&&row.c&&row.c[2]&&row.c[2].v!==null?String(row.c[2].v):'';}
-      function cellObs(row){return row&&row.c&&row.c[3]&&row.c[3].v!==null?String(row.c[3].v):'';}
-      function findRow(kw){return rows.find(function(r){return r.c&&r.c[1]&&r.c[1].v&&String(r.c[1].v).toLowerCase().indexOf(kw.toLowerCase())!==-1;});}
-      var dataRow=findRow('data');var turnoStr=dataRow?cellObs(dataRow):'';var turno='t2';
-      if(turnoStr.indexOf('T1')!==-1)turno='t1';else if(turnoStr.indexOf('T3')!==-1)turno='t3';
-      var dataVal=dataRow?cellVal(dataRow):'';if(dataVal){var pts=dataVal.split('/');if(pts.length===3)store[turno].data=pts[2]+'-'+pts[1].padStart(2,'0')+'-'+pts[0].padStart(2,'0');}
-      var hcInpRow=findRow('HC INP');if(hcInpRow){store[turno].hc_inp_p=cellVal(hcInpRow);}
-      var hcInpObs=hcInpRow?cellObs(hcInpRow):'';var m;
-      m=hcInpObs.match(/folgas?:\s*(\d+)/i);if(m)store[turno].hc_inp_f=m[1];
-      m=hcInpObs.match(/f.rias?:\s*(\d+)/i);if(m)store[turno].hc_inp_fer=m[1];
-      m=hcInpObs.match(/sinergia:\s*(\d+)/i);if(m)store[turno].hc_inp_sin=m[1];
-      m=hcInpObs.match(/licen.a:\s*(\d+)/i);if(m)store[turno].hc_inp_lic=m[1];
-      var hcPsRow=findRow('HC PS');if(hcPsRow){store[turno].hc_ps_p=cellVal(hcPsRow);}
-      var hcPsObs=hcPsRow?cellObs(hcPsRow):'';
-      m=hcPsObs.match(/treinamento:\s*(\d+)/i);if(m)store[turno].hc_ps_tr=m[1];
-      m=hcPsObs.match(/atestado:\s*(\d+)/i);if(m)store[turno].hc_ps_at=m[1];
-      m=hcPsObs.match(/falta:\s*(\d+)/i);if(m)store[turno].hc_ps_fal=m[1];
-      var fm=[['início do turno','ci_inicio'],['fim do turno','ci_fim'],['peças processadas','ci_pecas'],['ps finalizadas','ci_ps_fin'],['menos de 6','tarefa6h'],['pendentes início','ps_pend_ini'],['identificados','ps_ident'],['pendentes','ps_pend_fim'],['put away  realizado','pa_real'],['put away  pendente','pa_pend'],['paletes','paletes'],['última ida','ultima_ida'],['reaberturas','reaberturas'],['5s','cinco_s']];
-      fm.forEach(function(p){var r=findRow(p[0]);if(r){var v=cellVal(r);if(v)store[turno][p[1]]=v;}});
-      var ciR=findRow('início do turno');if(ciR){var bo=cellObs(ciR);var bm=bo.match(/backlog:\s*(\d+)/i);if(bm)store[turno].ci_backlog=bm[1];}
-      var alR=findRow('alertas');if(alR){store[turno].alertas=[cellVal(alR),cellObs(alR)].filter(Boolean).join(' — ');}
-      persist();document.getElementById('panel-'+turno).innerHTML=buildForm(turno);
-      document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
-      document.querySelector('.tab.'+turno).classList.add('active');document.getElementById('panel-'+turno).classList.add('active');
-      bar.style.background='#10b981';bar.style.color='white';bar.textContent='✅ Sincronizado — Turno '+turno.toUpperCase()+'!';setTimeout(function(){bar.style.display='none';},2500);
-    }catch(e){bar.style.background='#ef4444';bar.style.color='white';bar.textContent='❌ Erro ao processar.';setTimeout(function(){bar.style.display='none';},3000);}
-    btn.textContent='🔄 Sincronizar';btn.disabled=false;
-  };
-  var s=document.createElement('script');s.id='_gviz_s';
-  s.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&callback=_gvizCB&t='+Date.now();
-  s.onerror=function(){bar.style.background='#ef4444';bar.style.color='white';bar.textContent='❌ Erro ao acessar planilha.';setTimeout(function(){bar.style.display='none';},3000);btn.textContent='🔄 Sincronizar';btn.disabled=false;};
-  document.body.appendChild(s);
-}
-var DEFAULT_INP=['Isonice Wilma da Silva','Janaina Souza Santana','Pamela Cristina Prado dos Santos'];
-var DEFAULT_PS=['Agatha Christie Gomes Ferreira','Alessandra Rosa de Almeida','Allane Dorea Souza Nunes','Bruno Oliveira Santos Silva','Emanuela Santos da Silva','Valdineia Teles da Costa','Samila Dos Santos Albuquerque','Karine Silva Do Nascimento','Luana dos Santos Silva','Paulo Henrique Lacerda','Raul Paixao Meira','Regiane Aparecida Antunes','Raquel Borsoli de Brito Clementino','Edna Maria Da Silva Santos','Sheila Carvalho Dos Santos'];
-function initPresenca(t){if(!store[t].presenca||store[t].presenca.length===0){if(t==='t2'){store[t].presenca=DEFAULT_INP.map(function(nome){return{nome:nome,team:'inp',status:'presente'};}).concat(DEFAULT_PS.map(function(nome){return{nome:nome,team:'ps',status:'presente'};}));persist();}else{store[t].presenca=[];}}}
-function togglePresenca(t){var box=document.getElementById('pbox-'+t);var btn=document.getElementById('ptoggle-'+t);var open=box.classList.toggle('open');btn.classList.toggle('open',open);if(open){initPresenca(t);renderPresenca(t);}}
-function statusOpts(current){return STATUS_OPTS.map(function(s){return'<option value="'+s.val+'" '+(s.val===current?'selected':'')+'>'+s.label+'</option>';}).join('');}
-function renderPresenca(t){if(!store[t].presenca)store[t].presenca=[];var list=document.getElementById('plist-'+t);if(!list)return;list.innerHTML=store[t].presenca.map(function(p,i){var st=p.status||'presente';return'<div class="presenca-item"><span class="p-nome">'+p.nome+'</span><span class="p-team '+p.team+'">'+p.team.toUpperCase()+'</span><select class="p-status '+st+'" onchange="setStatus(\''+t+'\','+i+',this.value)">'+statusOpts(st)+'</select><button class="p-remove" onclick="removePessoa(\''+t+'\','+i+')" title="Remover">×</button></div>';}).join('')||'<span style="font-size:10px;color:#ccc;">Nenhum colaborador.</span>';updateCounts(t);}
-function setStatus(t,i,val){store[t].presenca[i].status=val;persist();var list=document.getElementById('plist-'+t);if(list){var sels=list.querySelectorAll('.p-status');if(sels[i])sels[i].className='p-status '+val;}updateCounts(t);updateHCFromPresenca(t);}
-function addPessoa(t){var inp=document.getElementById('pnome-'+t);var sel=document.getElementById('pteam-'+t);var nome=inp.value.trim();if(!nome)return;if(!store[t].presenca)store[t].presenca=[];store[t].presenca.push({nome:nome,team:sel.value,status:'presente'});inp.value='';persist();renderPresenca(t);updateHCFromPresenca(t);}
-function removePessoa(t,i){store[t].presenca.splice(i,1);persist();renderPresenca(t);updateHCFromPresenca(t);}
-function updateCounts(t){var lista=store[t].presenca||[];var inp=lista.filter(function(p){return p.status==='presente'&&p.team==='inp';}).length;var ps=lista.filter(function(p){return p.status==='presente'&&p.team==='ps';}).length;var ci=document.getElementById('pc-inp-'+t);if(ci)ci.textContent=inp;var cp=document.getElementById('pc-ps-'+t);if(cp)cp.textContent=ps;}
-function updateHCFromPresenca(t){var lista=store[t].presenca||[];var inp=lista.filter(function(p){return p.status==='presente'&&p.team==='inp';}).length;var ps=lista.filter(function(p){return p.status==='presente'&&p.team==='ps';}).length;var ausInp=lista.filter(function(p){return p.status!=='presente'&&p.team==='inp';});var auPs=lista.filter(function(p){return p.status!=='presente'&&p.team==='ps';});if(inp>0)store[t].hc_inp_p=String(inp);if(ps>0)store[t].hc_ps_p=String(ps);var atPs=auPs.filter(function(p){return p.status==='atestado';}).length;var folgaInp=ausInp.filter(function(p){return p.status==='folga';}).length;var feriasInp=ausInp.filter(function(p){return p.status==='ferias';}).length;var feriasPs=auPs.filter(function(p){return p.status==='ferias';}).length;var licPs=auPs.filter(function(p){return p.status==='licenca';}).length;if(atPs>0)store[t].hc_ps_at=String(atPs);if(folgaInp>0)store[t].hc_inp_f=String(folgaInp);if(feriasInp>0)store[t].hc_inp_fer=String(feriasInp);if(feriasPs+licPs>0)store[t].hc_ps_lic=String(feriasPs+licPs);persist();var panel=document.getElementById('panel-'+t);if(!panel)return;panel.querySelectorAll('input').forEach(function(el){if(el.onchange&&el.onchange.toString().indexOf('hc_inp_p')!==-1)el.value=inp||'';if(el.onchange&&el.onchange.toString().indexOf('hc_ps_p')!==-1)el.value=ps||'';});updateKPIs();}
-['t1','t2','t3'].forEach(function(t){document.getElementById('panel-'+t).innerHTML=buildForm(t);});
-var now=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
-document.getElementById('header-date').textContent=now;
-document.getElementById('footer-date').textContent=now;
-updateKPIs();
-</script>
-</body>
-</html>
+.presenca-item .p
