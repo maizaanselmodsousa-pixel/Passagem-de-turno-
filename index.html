@@ -33,6 +33,7 @@ header small { font-size: 10px; color: #666; }
 .hc-field { display: flex; flex-direction: column; gap: 2px; min-width: 52px; }
 .hc-field label { font-size: 9px; color: #aaa; font-weight: 700; text-transform: uppercase; }
 .hc-field input { border: 1px solid #e0e0e0; border-radius: 5px; padding: 3px 5px; font-size: 12px; font-weight: 700; font-family: inherit; outline: none; background: white; width: 52px; text-align: center; }
+.hc-field input[readonly] { background: #f0fdf4; border-color: #86efac; color: #166534; cursor: default; }
 .metrics-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 10px; }
 .metric { background: #f8f9fa; border-radius: 7px; padding: 7px 8px; border-left: 3px solid #e0e0e0; display: flex; flex-direction: column; gap: 2px; }
 .metric.blue { border-left-color: #3b82f6; } .metric.green { border-left-color: #10b981; }
@@ -64,6 +65,30 @@ header small { font-size: 10px; color: #666; }
 .resumo-empty { font-size: 11px; color: #ccc; font-style: italic; text-align: center; padding: 20px 0; }
 #sync-bar { display:none; position:fixed; top:0; left:0; right:0; background:#ffe600; color:#1a1a2e; text-align:center; font-size:12px; font-weight:700; padding:4px; z-index:999; }
 footer { text-align: center; padding: 8px; font-size: 10px; color: #ccc; }
+.lista-toggle { background: none; border: 1.5px solid #e0e0e0; border-radius: 7px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; color: #555; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; transition: all 0.15s; }
+.lista-toggle:hover { border-color: #3b82f6; color: #3b82f6; }
+.lista-box { display: none; background: #f8f9fa; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
+.lista-box.open { display: block; }
+.lista-area-title { font-size: 10px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 6px; padding-bottom: 4px; border-bottom: 1.5px solid #e0e0e0; width: 100%; }
+.lista-area-title:first-child { margin-top: 0; }
+.lista-colabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; }
+.lista-row { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid #e8e8e8; border-radius: 6px; padding: 5px 10px; }
+.lista-row .nome { flex: 1; font-size: 11px; font-weight: 600; color: #333; }
+.lista-row select { border: 1px solid #e0e0e0; border-radius: 5px; padding: 3px 6px; font-size: 11px; font-family: inherit; outline: none; cursor: pointer; font-weight: 600; }
+.lista-add { display: flex; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #e8e8e8; }
+.lista-add input { flex: 1; border: 1px solid #e0e0e0; border-radius: 5px; padding: 4px 8px; font-size: 11px; font-family: inherit; outline: none; }
+.lista-add input:focus { border-color: #3b82f6; }
+.lista-add button { background: #1a1a2e; color: white; border: none; border-radius: 5px; padding: 4px 12px; font-size: 11px; font-weight: 700; cursor: pointer; }
+.lista-row .btn-remove { background: none; border: none; cursor: pointer; color: #ccc; font-size: 14px; padding: 0; line-height: 1; }
+.lista-row .btn-remove:hover { color: #ef4444; }
+.s-presente { background: #d1fae5; color: #065f46; }
+.s-folga { background: #dbeafe; color: #1e40af; }
+.s-ferias { background: #ede9fe; color: #5b21b6; }
+.s-sinergia { background: #cffafe; color: #164e63; }
+.s-licenca { background: #ffedd5; color: #9a3412; }
+.s-treinamento { background: #fef9c3; color: #854d0e; }
+.s-atestado { background: #fee2e2; color: #991b1b; }
+.s-falta { background: #fce7f3; color: #9d174d; }
 </style>
 </head>
 <body>
@@ -105,15 +130,96 @@ footer { text-align: center; padding: 8px; font-size: 10px; color: #ccc; }
 <script>
 var SHEET_ID = '1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc';
 
+var COLABORADORES = {
+  t2: {
+    'INP': [
+      'Isonice Wilma da Silva',
+      'Janaina Souza Santana',
+      'Pamela Cristina Prado dos Santos'
+    ],
+    'PS Produção': [
+      'Agatha Christie Gomes Ferreira',
+      'Alessandra Rosa de Almeida',
+      'Allane Dorea Souza Nunes',
+      'Bruno Oliveira Santos Silva',
+      'Emanuela Santos da Silva',
+      'Valdineia Teles da Costa',
+      'Samila Dos Santos Albuquerque',
+      'Karine Silva Do Nascimento',
+      'Luana dos Santos Silva',
+      'Paulo Henrique Lacerda',
+      'Raul Paixao Meira',
+      'Vitoria de Souza Figueiredo',
+      'Raquel Borsoli de Brito Clementino',
+      'Edna Maria Da Silva Santos',
+      'Sheila Carvalho Dos Santos'
+    ]
+  }
+};
+
+var STATUS_INP = ['Presente','Folga','Sinergia','Treinamento','Atestado','Falta','Licença','Férias'];
+var STATUS_PS  = ['Presente','Folga','Sinergia','Treinamento','Atestado','Falta','Licença','Férias'];
+
+var STATUS_CLASS = {
+  'Presente':'s-presente','Folga':'s-folga','Férias':'s-ferias',
+  'Sinergia':'s-sinergia','Licença':'s-licenca','Treinamento':'s-treinamento',
+  'Atestado':'s-atestado','Falta':'s-falta'
+};
+
+var STATUS_HC_INP = {
+  'Presente':'hc_inp_p','Folga':'hc_inp_f','Sinergia':'hc_inp_sin',
+  'Treinamento':'hc_inp_tr','Atestado':'hc_inp_at','Falta':'hc_inp_fal',
+  'Licença':'hc_inp_lic','Férias':'hc_inp_fer'
+};
+var STATUS_HC_PS = {
+  'Presente':'hc_ps_p','Folga':'hc_ps_fol','Sinergia':'hc_ps_sin',
+  'Treinamento':'hc_ps_tr','Atestado':'hc_ps_at','Falta':'hc_ps_fal',
+  'Licença':'hc_ps_lic','Férias':'hc_ps_fer'
+};
+
 var store = { t1: {}, t2: {}, t3: {} };
 
 function sv(t,k,val){ store[t][k]=val; flash(t); }
 function flash(t){ var el=document.getElementById('ss-'+t); if(el){el.classList.add('show');setTimeout(function(){el.classList.remove('show');},2000);} }
 function g(t,k){ return store[t][k]||''; }
 
-function hcf(t,k,lbl){
-  return '<div class="hc-field"><label>'+lbl+'</label><input type="number" value="'+g(t,k)+'" placeholder="0" onchange="sv(\''+t+'\',\''+k+'\',this.value)"></div>';
+function calcHC(t){
+  if(!COLABORADORES[t]) return;
+  var statuses = store[t].statuses || {};
+  var extraStatuses = store[t].extra_statuses || {};
+  var inp = {hc_inp_p:0,hc_inp_f:0,hc_inp_sin:0,hc_inp_tr:0,hc_inp_at:0,hc_inp_fal:0,hc_inp_lic:0,hc_inp_fer:0};
+  var ps  = {hc_ps_p:0,hc_ps_fol:0,hc_ps_sin:0,hc_ps_tr:0,hc_ps_at:0,hc_ps_fal:0,hc_ps_lic:0,hc_ps_fer:0};
+  Object.keys(COLABORADORES[t]).forEach(function(area){
+    COLABORADORES[t][area].forEach(function(nome){
+      var st = statuses[nome] || 'Presente';
+      if(area === 'INP'){ var key=STATUS_HC_INP[st]; if(key) inp[key]++; }
+      else { var key=STATUS_HC_PS[st]; if(key) ps[key]++; }
+    });
+  });
+  var extrasLista = store[t].extras || [];
+  extrasLista.forEach(function(e){
+    var st = extraStatuses[e.nome] || 'Presente';
+    if(e.area === 'INP'){ var key=STATUS_HC_INP[st]; if(key) inp[key]++; }
+    else { var key=STATUS_HC_PS[st]; if(key) ps[key]++; }
+  });
+  Object.keys(inp).forEach(function(k){
+    store[t][k]=String(inp[k]);
+    var el=document.querySelector('#panel-'+t+' [data-hc="'+k+'"]');
+    if(el) el.value=inp[k];
+  });
+  Object.keys(ps).forEach(function(k){
+    store[t][k]=String(ps[k]);
+    var el=document.querySelector('#panel-'+t+' [data-hc="'+k+'"]');
+    if(el) el.value=ps[k];
+  });
 }
+
+function hcfAuto(t,k,lbl){
+  var auto=!!COLABORADORES[t], val=g(t,k);
+  if(auto) return '<div class="hc-field"><label>'+lbl+'</label><input type="number" data-hc="'+k+'" value="'+val+'" readonly title="Calculado automaticamente pela lista de presença"></div>';
+  return '<div class="hc-field"><label>'+lbl+'</label><input type="number" value="'+val+'" placeholder="0" onchange="sv(\''+t+'\',\''+k+'\',this.value)"></div>';
+}
+
 function met(t,k,lbl,color){
   return '<div class="metric '+color+'"><label>'+lbl+'</label><input type="text" value="'+g(t,k)+'" placeholder="—" onchange="sv(\''+t+'\',\''+k+'\',this.value)"></div>';
 }
@@ -122,10 +228,15 @@ function buildForm(t){
   var ok=g(t,'cinco_s')==='OK'?'selected':'';
   var pend=g(t,'cinco_s')==='Pendente'?'selected':'';
   var nok=g(t,'cinco_s')==='NOK'?'selected':'';
+  var auto=COLABORADORES[t]?' <span style="font-size:9px;color:#10b981;font-weight:400">(auto)</span>':'';
   return '<div class="top-row">'
     +'<div class="meta-box"><label>Data</label><input type="date" value="'+g(t,'data')+'" onchange="sv(\''+t+'\',\'data\',this.value)"><label style="margin-top:4px">Turno</label><select onchange="sv(\''+t+'\',\'turno\',this.value)"><option '+(t==='t1'?'selected':'')+'>T1</option><option '+(t==='t2'?'selected':'')+'>T2</option><option '+(t==='t3'?'selected':'')+'>T3</option></select></div>'
-    +'<div class="hc-box"><h4>👥 HC INP</h4><div class="hc-inline">'+hcf(t,'hc_inp_p','Pres.')+hcf(t,'hc_inp_f','Folgas')+hcf(t,'hc_inp_fer','Férias')+hcf(t,'hc_inp_sin','Sinergia')+hcf(t,'hc_inp_lic','Licença')+'</div></div>'
-    +'<div class="hc-box"><h4>👥 HC PS Produção</h4><div class="hc-inline">'+hcf(t,'hc_ps_p','Pres.')+hcf(t,'hc_ps_fol','Folgas')+hcf(t,'hc_ps_tr','Trein.')+hcf(t,'hc_ps_at','Atest.')+hcf(t,'hc_ps_fal','Falta')+hcf(t,'hc_ps_lic','Licença')+'</div></div>'
+    +'<div class="hc-box"><h4>👥 HC INP'+auto+'</h4><div class="hc-inline">'+hcfAuto(t,'hc_inp_p','Pres.')+hcfAuto(t,'hc_inp_f','Folgas')+hcfAuto(t,'hc_inp_sin','Sinerg.')+hcfAuto(t,'hc_inp_tr','Trein.')+hcfAuto(t,'hc_inp_at','Atest.')+hcfAuto(t,'hc_inp_fal','Falta')+hcfAuto(t,'hc_inp_lic','Licença')+hcfAuto(t,'hc_inp_fer','Férias')+'</div></div>'
+    +'<div class="hc-box"><h4>👥 HC PS Produção'+auto+'</h4><div class="hc-inline">'+hcfAuto(t,'hc_ps_p','Pres.')+hcfAuto(t,'hc_ps_fol','Folgas')+hcfAuto(t,'hc_ps_sin','Sinerg.')+hcfAuto(t,'hc_ps_tr','Trein.')+hcfAuto(t,'hc_ps_at','Atest.')+hcfAuto(t,'hc_ps_fal','Falta')+hcfAuto(t,'hc_ps_lic','Licença')+hcfAuto(t,'hc_ps_fer','Férias')+'</div></div>'
+    +'</div>'
+    +'<button class="lista-toggle" onclick="toggleLista(\''+t+'\')"><span id="lista-arrow-'+t+'">▶</span> 👤 Lista de Presença</button>'
+    +'<div class="lista-box" id="lista-box-'+t+'"><div id="lista-grid-'+t+'"></div>'
+    +'<div class="lista-add"><input type="text" id="lista-input-'+t+'" placeholder="Nome do colaborador..."><select id="lista-area-'+t+'" style="border:1px solid #e0e0e0;border-radius:5px;padding:4px 6px;font-size:11px;font-family:inherit;outline:none"><option value="INP">INP</option><option value="PS Produção">PS Produção</option></select><button onclick="addExtra(\''+t+'\')">+ Adicionar</button></div>'
     +'</div>'
     +'<div class="metrics-grid">'+met(t,'ci_inicio','Check-in Início','blue')+met(t,'ci_backlog','Backlog','gray')+met(t,'ci_fim','Check-in Fim','blue')+met(t,'ci_pecas','Peças Process.','green')+met(t,'ci_ps_fin','PS Finalizadas','green')+met(t,'tarefa6h','Tarefas < 6h','amber')+met(t,'ps_pend_ini','PS Pend. Início','red')+met(t,'ps_ident','PS Identificados','blue')+met(t,'ps_pend_fim','PS Pend. Fim','amber')+met(t,'pa_real','Put Away Real.','green')+met(t,'pa_pend','Put Away Pend.','amber')+met(t,'paletes','Paletes p/Linha','purple')+'</div>'
     +'<div class="bottom-row">'
@@ -138,6 +249,85 @@ function buildForm(t){
     +'<div class="bottom-box"><h4>📝 Observações</h4><textarea style="width:100%;resize:none;min-height:72px;border:1px solid #e0e0e0;border-radius:5px;padding:5px 7px;font-size:11px;font-family:inherit;outline:none;background:white" placeholder="Pontos de atenção para o próximo turno..." onchange="sv(\''+t+'\',\'obs\',this.value)">'+g(t,'obs')+'</textarea></div>'
     +'</div>'
     +'<div class="save-row"><span class="save-status" id="ss-'+t+'">✅ Salvo</span><button class="btn-clear" onclick="clearT(\''+t+'\')">Limpar</button><a class="btn-open" href="https://docs.google.com/spreadsheets/d/1F09r4otAryw8CQ-sjIbaD0y6cG4Xu__vtKRIuxjBiJc/edit" target="_blank">📊 Abrir Planilha</a></div>';
+}
+
+function toggleLista(t){
+  var box=document.getElementById('lista-box-'+t);
+  var arrow=document.getElementById('lista-arrow-'+t);
+  if(box.classList.contains('open')){ box.classList.remove('open'); arrow.textContent='▶'; }
+  else { box.classList.add('open'); arrow.textContent='▼'; renderPresenca(t); }
+}
+
+function getStatusOptions(area, currentStatus){
+  var opts = area === 'INP' ? STATUS_INP : STATUS_PS;
+  return opts.map(function(s){ return '<option value="'+s+'" '+(s===currentStatus?'selected':'')+'>'+s+'</option>'; }).join('');
+}
+
+function renderPresenca(t){
+  var grid=document.getElementById('lista-grid-'+t);
+  if(!grid) return;
+  var statuses=store[t].statuses||{}, extras=store[t].extras||[], extraStatuses=store[t].extra_statuses||{};
+  var html='';
+  if(COLABORADORES[t]){
+    Object.keys(COLABORADORES[t]).forEach(function(area){
+      html+='<div class="lista-area-title">'+area+'</div><div class="lista-colabs">';
+      COLABORADORES[t][area].forEach(function(nome){
+        var st=statuses[nome]||'Presente', cls=STATUS_CLASS[st]||'';
+        html+='<div class="lista-row '+cls+'"><span class="nome">👤 '+nome+'</span>'
+          +'<select onchange="setStatus(\''+t+'\',\''+nome.replace(/'/g,"\\'")+'\',this.value,\''+area+'\')">'+getStatusOptions(area,st)+'</select></div>';
+      });
+      html+='</div>';
+    });
+  }
+  if(extras.length>0){
+    html+='<div class="lista-area-title">Adicionados</div><div class="lista-colabs">';
+    extras.forEach(function(e,i){
+      var st=extraStatuses[e.nome]||'Presente', cls=STATUS_CLASS[st]||'';
+      var selOpts=(e.area==='INP'?STATUS_INP:STATUS_PS).map(function(s){ return '<option value="'+s+'" '+(s===st?'selected':'')+'>'+s+'</option>'; }).join('');
+      html+='<div class="lista-row '+cls+'"><span class="nome">👤 '+e.nome+' <span style="font-size:9px;color:#aaa">('+e.area+')</span></span>'
+        +'<select onchange="setExtraStatus(\''+t+'\','+i+',this.value)">'+selOpts+'</select>'
+        +'<button class="btn-remove" onclick="removeExtra(\''+t+'\','+i+')">×</button></div>';
+    });
+    html+='</div>';
+  }
+  grid.innerHTML=html;
+  calcHC(t);
+}
+
+function setStatus(t,nome,status,area){
+  if(!store[t].statuses) store[t].statuses={};
+  store[t].statuses[nome]=status;
+  var rows=document.querySelectorAll('#lista-grid-'+t+' .lista-row');
+  rows.forEach(function(row){
+    var span=row.querySelector('.nome');
+    if(span&&span.textContent.indexOf(nome)!==-1){
+      Object.values(STATUS_CLASS).forEach(function(c){row.classList.remove(c);});
+      row.classList.add(STATUS_CLASS[status]||'');
+    }
+  });
+  calcHC(t); flash(t);
+}
+
+function setExtraStatus(t,idx,status){
+  if(!store[t].extra_statuses) store[t].extra_statuses={};
+  store[t].extra_statuses[store[t].extras[idx].nome]=status;
+  calcHC(t); flash(t);
+}
+
+function addExtra(t){
+  var inp=document.getElementById('lista-input-'+t);
+  var areaSel=document.getElementById('lista-area-'+t);
+  var nome=inp.value.trim();
+  if(!nome) return;
+  if(!store[t].extras) store[t].extras=[];
+  store[t].extras.push({nome:nome, area:areaSel?areaSel.value:'PS Produção'});
+  inp.value='';
+  renderPresenca(t); flash(t);
+}
+
+function removeExtra(t,i){
+  store[t].extras.splice(i,1);
+  renderPresenca(t); flash(t);
 }
 
 function clearT(t){ if(!confirm('Limpar dados?'))return; store[t]={}; document.getElementById('panel-'+t).innerHTML=buildForm(t); }
@@ -154,60 +344,31 @@ function renderResumo(){
   var tl={t1:'T1',t2:'T2',t3:'T3'};
   document.getElementById('resumo-content').innerHTML=['t1','t2','t3'].map(function(t){
     var d=store[t], has=d.data||d.hc_ps_p;
-    var rows=[['Data',d.data?d.data.split('-').reverse().join('/'):'—'],['HC INP',d.hc_inp_p||'—'],['HC PS',d.hc_ps_p||'—'],['Folgas PS',d.hc_ps_fol||'—'],['Check-in Início',d.ci_inicio||'—'],['Check-in Fim',d.ci_fim||'—'],['PS Pend. Início',d.ps_pend_ini||'—'],['PS Identificados',d.ps_ident||'—'],['PS Pend. Fim',d.ps_pend_fim||'—'],['5S',d.cinco_s||'—'],['Alertas',d.alertas?d.alertas.substring(0,35)+(d.alertas.length>35?'…':''):'—']];
+    var rows=[['Data',d.data?d.data.split('-').reverse().join('/'):'—'],['HC INP Pres.',d.hc_inp_p||'—'],['HC PS Pres.',d.hc_ps_p||'—'],['Folgas PS',d.hc_ps_fol||'—'],['Check-in Início',d.ci_inicio||'—'],['Check-in Fim',d.ci_fim||'—'],['PS Pend. Início',d.ps_pend_ini||'—'],['PS Identificados',d.ps_ident||'—'],['PS Pend. Fim',d.ps_pend_fim||'—'],['5S',d.cinco_s||'—'],['Alertas',d.alertas?d.alertas.substring(0,35)+(d.alertas.length>35?'…':''):'—']];
     return '<div class="resumo-card '+t+'"><span class="resumo-turno">Turno '+tl[t]+'</span>'+(has?rows.map(function(r){return'<div class="resumo-row"><span class="rk">'+r[0]+'</span><span class="rv">'+r[1]+'</span></div>';}).join(''):'<div class="resumo-empty">Sem dados</div>')+'</div>';
   }).join('');
 }
 
 function syncSheet(){
-  var bar=document.getElementById('sync-bar');
-  var btn=document.getElementById('btn-sync');
+  var bar=document.getElementById('sync-bar'), btn=document.getElementById('btn-sync');
   bar.style.background='#ffe600'; bar.style.color='#1a1a2e';
-  bar.textContent='🔄 Buscando dados da planilha...';
-  bar.style.display='block';
-  btn.textContent='⏳ Buscando...';
-  btn.disabled=true;
-
-  var old=document.getElementById('_gviz_s');
-  if(old) old.remove();
-
-  window._gvizCB = function(resp){
+  bar.textContent='🔄 Buscando dados da planilha...'; bar.style.display='block';
+  btn.textContent='⏳ Buscando...'; btn.disabled=true;
+  var old=document.getElementById('_gviz_s'); if(old) old.remove();
+  window._gvizCB=function(resp){
     try{
-      var rows = resp.table.rows;
-      function cellVal(row){ return row && row.c && row.c[2] && row.c[2].v !== null ? String(row.c[2].v) : ''; }
-      function cellObs(row){ return row && row.c && row.c[3] && row.c[3].v !== null ? String(row.c[3].v) : ''; }
-      function findRow(kw){
-        return rows.find(function(r){ return r.c && r.c[1] && r.c[1].v && String(r.c[1].v).toLowerCase().indexOf(kw.toLowerCase())!==-1; });
-      }
-      var dataRow = findRow('data');
-      var turnoStr = dataRow ? cellObs(dataRow) : '';
-      var turno = 't2';
-      if(turnoStr.indexOf('T1')!==-1) turno='t1';
-      else if(turnoStr.indexOf('T3')!==-1) turno='t3';
-      var dataVal = dataRow ? cellVal(dataRow) : '';
-      if(dataVal){ var pts = dataVal.split('/'); if(pts.length===3) store[turno].data = pts[2]+'-'+pts[1].padStart(2,'0')+'-'+pts[0].padStart(2,'0'); }
-      var hcInpRow = findRow('HC INP');
-      if(hcInpRow){ store[turno].hc_inp_p = cellVal(hcInpRow); }
-      var hcInpObs = hcInpRow ? cellObs(hcInpRow) : '';
-      var m;
-      m=hcInpObs.match(/folgas?:\s*(\d+)/i); if(m) store[turno].hc_inp_f=m[1];
-      m=hcInpObs.match(/f.rias?:\s*(\d+)/i); if(m) store[turno].hc_inp_fer=m[1];
-      m=hcInpObs.match(/sinergia:\s*(\d+)/i); if(m) store[turno].hc_inp_sin=m[1];
-      m=hcInpObs.match(/licen.a:\s*(\d+)/i); if(m) store[turno].hc_inp_lic=m[1];
-      var hcPsRow = findRow('HC PS');
-      if(hcPsRow){ store[turno].hc_ps_p = cellVal(hcPsRow); }
-      var hcPsObs = hcPsRow ? cellObs(hcPsRow) : '';
-      m=hcPsObs.match(/folgas?:\s*(\d+)/i); if(m) store[turno].hc_ps_fol=m[1];
-      m=hcPsObs.match(/treinamento:\s*(\d+)/i); if(m) store[turno].hc_ps_tr=m[1];
-      m=hcPsObs.match(/atestado:\s*(\d+)/i); if(m) store[turno].hc_ps_at=m[1];
-      m=hcPsObs.match(/falta:\s*(\d+)/i); if(m) store[turno].hc_ps_fal=m[1];
-      m=hcPsObs.match(/licen.a:\s*(\d+)/i); if(m) store[turno].hc_ps_lic=m[1];
+      var rows=resp.table.rows;
+      function cellVal(row){ return row&&row.c&&row.c[2]&&row.c[2].v!==null?String(row.c[2].v):''; }
+      function cellObs(row){ return row&&row.c&&row.c[3]&&row.c[3].v!==null?String(row.c[3].v):''; }
+      function findRow(kw){ return rows.find(function(r){ return r.c&&r.c[1]&&r.c[1].v&&String(r.c[1].v).toLowerCase().indexOf(kw.toLowerCase())!==-1; }); }
+      var dataRow=findRow('data'), turnoStr=dataRow?cellObs(dataRow):'', turno='t2';
+      if(turnoStr.indexOf('T1')!==-1) turno='t1'; else if(turnoStr.indexOf('T3')!==-1) turno='t3';
+      var dataVal=dataRow?cellVal(dataRow):'';
+      if(dataVal){ var pts=dataVal.split('/'); if(pts.length===3) store[turno].data=pts[2]+'-'+pts[1].padStart(2,'0')+'-'+pts[0].padStart(2,'0'); }
       var fm=[['início do turno','ci_inicio'],['fim do turno','ci_fim'],['peças processadas','ci_pecas'],['ps finalizadas','ci_ps_fin'],['menos de 6','tarefa6h'],['pendentes início','ps_pend_ini'],['identificados','ps_ident'],['pendentes','ps_pend_fim'],['put away  realizado','pa_real'],['put away  pendente','pa_pend'],['paletes','paletes'],['última ida','ultima_ida'],['reaberturas','reaberturas'],['5s','cinco_s']];
       fm.forEach(function(p){ var r=findRow(p[0]); if(r){ var v=cellVal(r); if(v) store[turno][p[1]]=v; } });
-      var ciR = findRow('início do turno');
-      if(ciR){ var bo=cellObs(ciR); var bm=bo.match(/backlog:\s*(\d+)/i); if(bm) store[turno].ci_backlog=bm[1]; }
-      var alR = findRow('alertas');
-      if(alR){ store[turno].alertas=[cellVal(alR),cellObs(alR)].filter(Boolean).join(' — '); }
+      var ciR=findRow('início do turno'); if(ciR){ var bo=cellObs(ciR); var bm=bo.match(/backlog:\s*(\d+)/i); if(bm) store[turno].ci_backlog=bm[1]; }
+      var alR=findRow('alertas'); if(alR){ store[turno].alertas=[cellVal(alR),cellObs(alR)].filter(Boolean).join(' — '); }
       document.getElementById('panel-'+turno).innerHTML=buildForm(turno);
       document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
       document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
@@ -223,20 +384,14 @@ function syncSheet(){
     }
     btn.textContent='🔄 Sincronizar'; btn.disabled=false;
   };
-
-  var s=document.createElement('script');
-  s.id='_gviz_s';
+  var s=document.createElement('script'); s.id='_gviz_s';
   s.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&callback=_gvizCB&t='+Date.now();
-  s.onerror=function(){
-    bar.style.background='#ef4444'; bar.style.color='white';
-    bar.textContent='❌ Erro ao acessar planilha. Verifique se está pública.';
-    setTimeout(function(){ bar.style.display='none'; },3000);
-    btn.textContent='🔄 Sincronizar'; btn.disabled=false;
-  };
+  s.onerror=function(){ bar.style.background='#ef4444'; bar.style.color='white'; bar.textContent='❌ Erro ao acessar planilha.'; setTimeout(function(){ bar.style.display='none'; },3000); btn.textContent='🔄 Sincronizar'; btn.disabled=false; };
   document.body.appendChild(s);
 }
 
 ['t1','t2','t3'].forEach(function(t){ document.getElementById('panel-'+t).innerHTML=buildForm(t); });
+calcHC('t2');
 var now=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
 document.getElementById('header-date').textContent=now;
 document.getElementById('footer-date').textContent=now;
