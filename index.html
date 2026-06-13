@@ -61,7 +61,6 @@ header small { font-size: 10px; color: #666; }
 .rk { color: #999; } .rv { font-weight: 700; }
 .resumo-empty { font-size: 11px; color: #ccc; font-style: italic; text-align: center; padding: 20px 0; }
 footer { text-align: center; padding: 8px; font-size: 10px; color: #ccc; }
-/* Lista de Presença */
 .presenca-box { background: #f8f9fa; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
 .presenca-box h4 { font-size: 10px; font-weight: 800; color: #555; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 .presenca-table { width: 100%; border-collapse: collapse; }
@@ -180,7 +179,7 @@ function buildPresenca(t){
     var st=getStatus(t,nome), sid=safeId(nome);
     return '<tr>'
       +'<td class="presenca-nome">'+nome+'</td>'
-      +'<td><select id="psel_'+t+'_'+sid+'" class="presenca-select '+st+'" onchange="setStatus(\''+t+'\',\''+nome.replace(/'/g,"\\'")+'\ ',this.value)">'
+      +'<td><select id="psel_'+t+'_'+sid+'" class="presenca-select '+st+'" onchange="setStatus(\''+t+'\',\''+nome.replace(/'/g,"\\'")+'\',this.value)">'
       +'<option value="presente"'+(st==='presente'?' selected':'')+'>✅ Presente</option>'
       +'<option value="falta"'+(st==='falta'?' selected':'')+'>❌ Falta</option>'
       +'<option value="atestado"'+(st==='atestado'?' selected':'')+'>🏥 Atestado</option>'
