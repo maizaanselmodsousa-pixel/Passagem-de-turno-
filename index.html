@@ -74,6 +74,8 @@ footer { text-align: center; padding: 8px; font-size: 10px; color: #ccc; }
 .presenca-select.atestado { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
 .presenca-select.ferias { background: #ede9fe; color: #4c1d95; border-color: #c4b5fd; }
 .presenca-select.licenca { background: #e0f2fe; color: #0c4a6e; border-color: #7dd3fc; }
+.presenca-select.folga { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+.presenca-select.treinamento { background: #f3e8ff; color: #6b21a8; border-color: #d8b4fe; }
 .btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 13px; padding: 0 2px; line-height: 1; }
 .btn-rm:hover { color: #ef4444; }
 .presenca-add-row { display: flex; gap: 6px; margin-top: 8px; }
@@ -139,19 +141,13 @@ function updateHCFromPresenca(t){
   function count(lista, status){
     return lista.filter(function(n){ return getStatus(t,n)===status; }).length;
   }
-  var inpP=count(inp,'presente'), inpFer=count(inp,'ferias');
-  var inpLic=count(inp,'licenca')+count(inp,'atestado'), inpFal=count(inp,'falta');
-  var psP=count(ps,'presente'), psAt=count(ps,'atestado');
-  var psFal=count(ps,'falta'), psLic=count(ps,'licenca')+count(ps,'ferias');
-  store[t].hc_inp_p=inpP||''; store[t].hc_inp_fer=inpFer||'';
-  store[t].hc_inp_lic=inpLic||''; store[t].hc_inp_f=inpFal||'';
-  store[t].hc_ps_p=psP||''; store[t].hc_ps_at=psAt||'';
-  store[t].hc_ps_fal=psFal||''; store[t].hc_ps_lic=psLic||'';
+  var inpP=count(inp,'presente'), inpF=count(inp,'folga'), inpFer=count(inp,'ferias'), inpTr=count(inp,'treinamento'), inpAt=count(inp,'atestado'), inpFal=count(inp,'falta'), inpLic=count(inp,'licenca');
+  var psP=count(ps,'presente'),   psF=count(ps,'folga'),   psFer=count(ps,'ferias'),   psTr=count(ps,'treinamento'),   psAt=count(ps,'atestado'),   psFal=count(ps,'falta'),   psLic=count(ps,'licenca');
+  store[t].hc_inp_p=inpP||''; store[t].hc_inp_f=inpF||''; store[t].hc_inp_fer=inpFer||''; store[t].hc_inp_tr=inpTr||''; store[t].hc_inp_at=inpAt||''; store[t].hc_inp_fal=inpFal||''; store[t].hc_inp_lic=inpLic||'';
+  store[t].hc_ps_p=psP||'';   store[t].hc_ps_f=psF||'';   store[t].hc_ps_fer=psFer||'';   store[t].hc_ps_tr=psTr||'';   store[t].hc_ps_at=psAt||'';   store[t].hc_ps_fal=psFal||'';   store[t].hc_ps_lic=psLic||'';
   function si(id,v){ var el=document.getElementById(id); if(el) el.value=v||''; }
-  si('hc_'+t+'_inp_p',inpP); si('hc_'+t+'_inp_fer',inpFer);
-  si('hc_'+t+'_inp_lic',inpLic); si('hc_'+t+'_inp_f',inpFal);
-  si('hc_'+t+'_ps_p',psP); si('hc_'+t+'_ps_at',psAt);
-  si('hc_'+t+'_ps_fal',psFal); si('hc_'+t+'_ps_lic',psLic);
+  si('hc_'+t+'_inp_p',inpP); si('hc_'+t+'_inp_f',inpF); si('hc_'+t+'_inp_fer',inpFer); si('hc_'+t+'_inp_tr',inpTr); si('hc_'+t+'_inp_at',inpAt); si('hc_'+t+'_inp_fal',inpFal); si('hc_'+t+'_inp_lic',inpLic);
+  si('hc_'+t+'_ps_p',psP);   si('hc_'+t+'_ps_f',psF);   si('hc_'+t+'_ps_fer',psFer);   si('hc_'+t+'_ps_tr',psTr);   si('hc_'+t+'_ps_at',psAt);   si('hc_'+t+'_ps_fal',psFal);   si('hc_'+t+'_ps_lic',psLic);
 }
 function addPessoa(t){
   var inp=document.getElementById('inp_add_'+t);
@@ -185,6 +181,8 @@ function buildPresenca(t){
       +'<option value="atestado"'+(st==='atestado'?' selected':'')+'>🏥 Atestado</option>'
       +'<option value="ferias"'+(st==='ferias'?' selected':'')+'>🌴 Férias</option>'
       +'<option value="licenca"'+(st==='licenca'?' selected':'')+'>📋 Licença</option>'
+      +'<option value="folga"'+(st==='folga'?' selected':'')+'>🔵 Folga</option>'
+      +'<option value="treinamento"'+(st==='treinamento'?' selected':'')+'>📚 Treinamento</option>'
       +'</select></td>'
       +'<td><button class="btn-rm" onclick="removePessoa(\''+t+'\',\''+nome.replace(/'/g,"\\'")+'\')" title="Remover">✕</button></td>'
       +'</tr>';
@@ -226,10 +224,10 @@ function buildForm(t){
         +'</select>'
       +'</div>'
       +'<div class="hc-box"><h4>👥 HC INP</h4><div class="hc-inline">'
-        +hcf(t,'hc_inp_p','Pres.')+hcf(t,'hc_inp_f','Folgas')+hcf(t,'hc_inp_fer','Férias')+hcf(t,'hc_inp_sin','Sinergia')+hcf(t,'hc_inp_lic','Licença')
+        +hcf(t,'hc_inp_p','Pres.')+hcf(t,'hc_inp_f','Folgas')+hcf(t,'hc_inp_fer','Férias')+hcf(t,'hc_inp_tr','Trein.')+hcf(t,'hc_inp_at','Atest.')+hcf(t,'hc_inp_fal','Falta')+hcf(t,'hc_inp_lic','Licença')
       +'</div></div>'
       +'<div class="hc-box"><h4>👥 HC PS Produção</h4><div class="hc-inline">'
-        +hcf(t,'hc_ps_p','Pres.')+hcf(t,'hc_ps_tr','Trein.')+hcf(t,'hc_ps_at','Atest.')+hcf(t,'hc_ps_fal','Falta')+hcf(t,'hc_ps_lic','Licença')
+        +hcf(t,'hc_ps_p','Pres.')+hcf(t,'hc_ps_f','Folgas')+hcf(t,'hc_ps_fer','Férias')+hcf(t,'hc_ps_tr','Trein.')+hcf(t,'hc_ps_at','Atest.')+hcf(t,'hc_ps_fal','Falta')+hcf(t,'hc_ps_lic','Licença')
       +'</div></div>'
     +'</div>'
     +'<div class="metrics-grid">'
